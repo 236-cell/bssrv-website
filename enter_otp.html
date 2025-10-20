@@ -47,7 +47,24 @@
       <p class="note">Didn't receive OTP? Try again later.</p>
     </div>
   </section>
+<style>
+  .otp-container {
+  display: flex;           /* place boxes in a row */
+  justify-content: space-between; /* spread evenly */
+  gap: 10px;               /* optional space between boxes */
+  max-width: 300px;        /* adjust total width */
+  margin: 0 auto;          /* center horizontally */
+}
 
+.otp-box {
+  width: 40px;             /* size of each box */
+  height: 50px;
+  text-align: center;      /* center the digit */
+  font-size: 24px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+</style>
   <script>
     const form = document.getElementById('otpForm');
     const otpBoxes = document.querySelectorAll('.otp-box');
@@ -74,6 +91,7 @@
 
 </body>
 </html>
+
 
 
 
