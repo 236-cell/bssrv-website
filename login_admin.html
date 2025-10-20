@@ -35,5 +35,24 @@
   </section>
 
 </body>
+  <script>
+  // Hard-coded admin credentials
+  const adminUser = "Dr. Arup Hazarika";
+  const adminPass = "ADM2025!";
+
+  document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username === adminUser && password === adminPass) {
+      window.location.href = 'confirm_gmail.html';
+    } else {
+      alert("Invalid admin username or password. Access denied!");
+    }
+  });
+</script>
+
 </html>
+
 
