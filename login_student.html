@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Login | BSSRV</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
+  <!-- HEADER -->
   <header class="login-header">
     <div class="logo">
       <img src="bssrv_logo.png" alt="BSSRV Logo">
@@ -17,23 +16,43 @@
     </div>
   </header>
 
-  <!-- ===== LOGIN FORM ===== -->
+  <!-- LOGIN FORM -->
   <section class="login-section">
     <div class="login-box">
       <h2>Student Login</h2>
-      <form action="confirm_gmail.html" method="get">
+      <form id="studentLoginForm">
         <label for="username">Username</label>
-        <input type="Username" id="Username" placeholder="Enter your usernsme" required>
+        <input type="text" id="username" placeholder="Enter your username" required>
 
         <label for="password">Password</label>
         <input type="password" id="password" placeholder="Enter your password" required>
 
         <button type="submit" class="btn-login">Next</button>
       </form>
-      <p class="note">Forgot Password? (non-functional)</p>
+      <p class="note">Only authorized students can login.</p>
     </div>
   </section>
 
-</body>
+  <script>
+    // Hard-coded credentials
+    const validUsername = "Sahil Firdaus";
+    const validPassword = "IDCS048";
 
+    document.getElementById('studentLoginForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default form submission
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if(username === validUsername && password === validPassword){
+        // Credentials match → go to next page
+        window.location.href = 'confirm_gmail.html';
+      } else {
+        alert("Invalid username or password. Access denied!");
+      }
+    });
+  </script>
+
+</body>
 </html>
+
