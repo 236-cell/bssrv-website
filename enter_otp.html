@@ -37,16 +37,6 @@
 <input type="text" maxlength="1" class="otp-box" name="digit6" required>
 
         </div>
-
-        <div style="margin-top:12px;">
-          <button type="submit">Submit OTP</button>
-        </div>
-      </form>
-
-      <p id="status" class="status" style="color:green;"></p>
-      <p class="note">Didn't receive OTP? Try again later.</p>
-    </div>
-  </section>
 <style>
   .otp-container {
   display: flex;           /* place boxes in a row */
@@ -65,6 +55,15 @@
   border-radius: 5px;
 }
 </style>
+        <div style="margin-top:12px;">
+          <button type="submit">Submit OTP</button>
+        </div>
+      </form>
+
+      <p id="status" class="status" style="color:green;"></p>
+      <p class="note">Didn't receive OTP? Try again later.</p>
+    </div>
+  </section>
   <script>
     const form = document.getElementById('otpForm');
     const otpBoxes = document.querySelectorAll('.otp-box');
@@ -91,6 +90,7 @@
 
 </body>
 </html>
+
 
 
 
