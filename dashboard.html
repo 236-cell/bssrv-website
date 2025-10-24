@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BSSRV University | Student Dashboard</title>
+<style>
+/* ========== GLOBAL ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color: #f5f7fb;
+  color: #333;
+}
+
+/* ========== HEADER ========== */
+header {
+  background-color: #002b6b;
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+header .user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+header img {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: white;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+  width: 230px;
+  background-color: #013b87;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 80px;
+  color: white;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.sidebar ul {
+  list-style: none;
+}
+.sidebar ul li {
+  padding: 15px 25px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.sidebar ul li:hover {
+  background-color: #0050c8;
+}
+.sidebar ul li.active {
+  background-color: #0042a3;
+}
+.sidebar.closed {
+  transform: translateX(-250px);
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+  margin-left: 230px;
+  padding: 30px 50px;
+  transition: margin-left 0.3s ease;
+}
+.sidebar.closed ~ .main-content {
+  margin-left: 0;
+}
+
+/* SECTIONS */
+.section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.section h2 {
+  color: #004aad;
+  margin-bottom: 15px;
+}
+
+/* INFO GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 15px;
+}
+.info-card {
+  background: #f0f5ff;
+  border-left: 4px solid #004aad;
+  padding: 15px;
+  border-radius: 8px;
+}
+.info-card h4 {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #004aad;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th,
+td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+th {
+  background-color: #eef3ff;
+}
+.grade {
+  font-weight: bold;
+  text-align: center;
+}
+.Aplus {
+  color: #2e8b57;
+}
+.A {
+  color: #4caf50;
+}
+.Bplus {
+  color: #ff9800;
+}
+
+/* ACHIEVEMENTS */
+ul.achievements {
+  list-style-type: square;
+  padding-left: 20px;
+}
+ul.achievements li {
+  margin-bottom: 8px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  background: #f0f0f0;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-250px);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .hamburger {
+    display: block;
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <span class="hamburger" id="hamburger">☰</span>
+    <h1>BSSRV University – Student Dashboard</h1>
+  </div>
+  <div class="user-info">
+    <img src="https://i.pravatar.cc/100?img=12" alt="Profile" />
+    <div>
+      <strong>Sahil Firdaus Mazinder Baruah</strong><br />
+      B.Tech CSE (AI & ML) – Batch 2025
+    </div>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <ul>
+    <li class="active" data-target="profile">🏠 Dashboard</li>
+    <li data-target="courses">📘 Courses</li>
+    <li data-target="attendance">🧾 Attendance</li>
+    <li data-target="results">📊 Results</li>
+    <li data-target="achievements">🏆 Achievements</li>
+    <li data-target="settings">⚙️ Settings</li>
+  </ul>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+  <!-- Academic Info -->
+  <div class="section" id="profile">
+    <h2>Academic Profile</h2>
+    <div class="info-grid">
+      <div class="info-card"><h4>Enrollment No.</h4><p>BSSRV2025CSEAIML001</p></div>
+      <div class="info-card"><h4>Course</h4><p>B.Tech Computer Science & Engineering (AI & ML)</p></div>
+      <div class="info-card"><h4>Current Year / Semester</h4><p>1st Year / 1st Semester</p></div>
+      <div class="info-card"><h4>Batch</h4><p>2025</p></div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="section" id="results">
+    <h2>Sessional Exam Performance</h2>
+    <table>
+      <thead>
+        <tr><th>Subject</th><th>Grade</th><th>Credits</th><th>Instructor</th><th>Remarks</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Physics</td><td class="grade A">A</td><td>3</td><td>Dr. Meenakshi Rao</td><td>Excellent conceptual clarity</td></tr>
+        <tr><td>C Programming</td><td class="grade Aplus">A+</td><td>4</td><td>Prof. A. Dutta</td><td>Outstanding coding skills</td></tr>
+        <tr><td>Mathematics</td><td class="grade Bplus">B+</td><td>3</td><td>Dr. Anirban Chakraborty</td><td>Good performance</td></tr>
+        <tr><td>English Communicative</td><td class="grade Aplus">A+</td><td>2</td><td>Dr. N. Sinha</td><td>Excellent communication</td></tr>
+        <tr><td>Basics of Electronics</td><td class="grade Bplus">B+</td><td>3</td><td>Prof. K. Sharma</td><td>Good understanding</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Attendance -->
+  <div class="section" id="attendance">
+    <h2>Attendance Overview</h2>
+    <table>
+      <thead><tr><th>Subject</th><th>Attended</th><th>Total</th><th>%</th></tr></thead>
+      <tbody>
+        <tr><td>Physics</td><td>38</td><td>40</td><td>95%</td></tr>
+        <tr><td>C Programming</td><td>45</td><td>50</td><td>90%</td></tr>
+        <tr><td>Mathematics</td><td>41</td><td>46</td><td>89%</td></tr>
+        <tr><td>English Communicative</td><td>33</td><td>35</td><td>94%</td></tr>
+        <tr><td>Basics of Electronics</td><td>37</td><td>40</td><td>92%</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;"><strong>Overall Attendance:</strong> 92%</p>
+  </div>
+
+  <!-- Achievements -->
+  <div class="section" id="achievements">
+    <h2>Achievements & Activities</h2>
+    <ul class="achievements">
+      <li>🏆 Top performer in “C Programming Sessional Exam” (Rank #1)</li>
+      <li>💡 Participated in “AI for Beginners” Workshop 2025</li>
+      <li>🎖️ Completed “Python Fundamentals” by Coursera</li>
+      <li>🤝 Volunteered at Freshers’ Orientation 2025</li>
+      <li>🧠 Member of “AI Coding Club” – Technical Department</li>
+    </ul>
+  </div>
+
+  <div class="section" id="settings">
+    <h2>Account Settings</h2>
+    <p>Email: sahil.bssrv@edu.in</p>
+    <p>Phone: +91-9876543210</p>
+    <button style="padding:10px 20px;border:none;border-radius:8px;background:#004aad;color:white;cursor:pointer;">Edit Profile</button>
+  </div>
+</main>
+
+<footer>© 2025 BSSRV University | Demo Portal</footer>
+
+<script>
+// Sidebar toggle
+const sidebar = document.getElementById("sidebar");
+const hamburger = document.getElementById("hamburger");
+
+hamburger.addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+});
+
+// Sidebar navigation
+document.querySelectorAll(".sidebar ul li").forEach((item) => {
+  item.addEventListener("click", () => {
+    document.querySelectorAll(".sidebar ul li").forEach((li) => li.classList.remove("active"));
+    item.classList.add("active");
+
+    const target = item.getAttribute("data-target");
+    const section = document.getElementById(target);
+    if (section) {
+      window.scrollTo({ top: section.offsetTop - 80, behavior: "smooth" });
+    }
+  });
+});
+</script>
+</body>
+</html>
+

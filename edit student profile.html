@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard - Edit Profile</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f4f8;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 700px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #555;
+    }
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    input[readonly] {
+        background-color: #eee;
+        cursor: not-allowed;
+    }
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+    button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    button.save {
+        background-color: #4CAF50;
+        color: #fff;
+    }
+    button.save:hover {
+        background-color: #45a049;
+    }
+    button.cancel {
+        background-color: #f44336;
+        color: #fff;
+    }
+    button.cancel:hover {
+        background-color: #da190b;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Edit Profile</h2>
+
+    <div class="form-group">
+        <label>Student Number</label>
+        <input type="text" id="studentNo" readonly>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email">
+    </div>
+    <div class="form-group">
+        <label>Father's Name</label>
+        <input type="text" id="fatherName">
+    </div>
+    <div class="form-group">
+        <label>Mother's Name</label>
+        <input type="text" id="motherName">
+    </div>
+    <div class="form-group">
+        <label>Date of Birth</label>
+        <input type="date" id="dob">
+    </div>
+
+    <div class="form-group">
+        <label>Anonymous Query</label>
+        <textarea id="query" placeholder="Type your query here..."></textarea>
+        <button class="save" onclick="submitQuery()">Send Query</button>
+    </div>
+
+    <div class="buttons">
+        <button class="save" onclick="saveProfile()">Save Changes</button>
+        <button class="cancel" onclick="resetProfile()">Cancel</button>
+    </div>
+</div>
+
+<script>
+    // Default student details
+    const defaultProfile = {
+        studentNo: '8134877412',
+        email: 'firdausmbaruah@gmail.com',
+        fatherName: 'Ali Mustakh Mazinder Baruah',
+        motherName: 'Pahari Mazinder Baruah',
+        dob: '2005-12-09'
+    };
+
+    // Load saved profile or default
+    function loadProfile() {
+        const savedProfile = JSON.parse(localStorage.getItem('studentProfile')) || defaultProfile;
+        document.getElementById('studentNo').value = savedProfile.studentNo;
+        document.getElementById('email').value = savedProfile.email;
+        document.getElementById('fatherName').value = savedProfile.fatherName;
+        document.getElementById('motherName').value = savedProfile.motherName;
+        document.getElementById('dob').value = savedProfile.dob;
+    }
+
+    // Save profile to localStorage
+    function saveProfile() {
+        const profile = {
+            studentNo: document.getElementById('studentNo').value,
+            email: document.getElementById('email').value,
+            fatherName: document.getElementById('fatherName').value,
+            motherName: document.getElementById('motherName').value,
+            dob: document.getElementById('dob').value
+        };
+        localStorage.setItem('studentProfile', JSON.stringify(profile));
+        alert('Profile saved successfully!');
+    }
+
+    // Reset to last saved or default
+    function resetProfile() {
+        if(confirm('Are you sure you want to discard changes?')) {
+            loadProfile();
+        }
+    }
+
+    // Submit anonymous query
+    function submitQuery() {
+        const query = document.getElementById('query').value.trim();
+        if(query === '') {
+            alert('Please type a query before sending.');
+            return;
+        }
+        console.log('Anonymous Query Submitted:', query); // In real app, send to server
+        alert('Your query has been submitted anonymously!');
+        document.getElementById('query').value = '';
+    }
+
+    // Initialize
+    loadProfile();
+</script>
+
+</body>
+</html>
